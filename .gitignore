@@ -7,3 +7,7 @@ packages/
 xcuserdata
 Resources/Frameworks/OpenSSL.framework
 apps_nightly.json
+.memory-build/
+dist-memory/
+build-logs-memory/
+BuildSupport/SideStoreMemoryFix/__pycache__/

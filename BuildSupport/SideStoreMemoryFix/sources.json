@@ -1,0 +1,12 @@
+{
+  "sidestore_repository": "https://github.com/SideStore/SideStore.git",
+  "sidestore_revision": "cd260851ae99bf1fc946b123db24e89c8cd21dc6",
+  "sidesign_base_revision": "752d1ef602aa792a432ffa1e71646dc1ecf7363c",
+  "sidesign_fix_commit": "9d89dac1d391c934e5c69be1fadbb090d9a7f944",
+  "sidesign_fix_parent": "6b68651697f99791ef85404b7aea1891a26a285d",
+  "sidesign_fix_url": "https://github.com/SideStore/SideSign/pull/4",
+  "sidesign_patch_sha256": "35b07afda99108d8f8286505961c8cf66a1ab9e38b2a439167be7b2ee7fe0c00",
+  "livecontainer_base_revision": "9108ae624ea001f7d7696d48407f890b48fa2653",
+  "dylibify_url": "https://github.com/LiveContainer/dylibify/releases/download/1.0/dylibify",
+  "dylibify_sha256": "6d23f6a2fc4d8442f87caa1161aebe6ecaafd0e8c41ce205da007efb04fc82c7"
+}

@@ -1,0 +1,70 @@
+name: LiveContainer with standalone SideStore memory fix
+
+on:
+  push:
+    branches: [ci/standalone-sidestore-memory]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: standalone-sidestore-memory-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check packaging and pinned patch contracts
+        run: python3 BuildSupport/SideStoreMemoryFix/test_package.py
+
+  build:
+    needs: validate
+    runs-on: macos-15
+    timeout-minutes: 180
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+      - uses: maxim-lobanov/setup-xcode@v1.6.0
+        with:
+          xcode-version: '26.2'
+      - name: Install signing-request tool
+        run: |
+          if ! brew list --versions ldid >/dev/null 2>&1; then brew install ldid; fi
+          xcodebuild -version
+          swift --version
+      - uses: actions/cache@v5
+        with:
+          path: |
+            .memory-build/SourcePackages
+            ~/Library/Caches/org.swift.swiftpm
+          key: standalone-sidestore-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('BuildSupport/SideStoreMemoryFix/sources.json') }}
+      - name: Build patched standalone SideStore and the combined IPA
+        run: bash BuildSupport/SideStoreMemoryFix/build.sh
+      - name: Upload installable-source artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: LiveContainer-StandaloneSideStore-memory-fix
+          path: |
+            dist-memory/*.ipa
+            dist-memory/BUILD-MANIFEST.json
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+      - name: Summarize build failures
+        if: always()
+        run: python3 BuildSupport/SideStoreMemoryFix/report.py
+      - name: Upload complete build logs
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: standalone-sidestore-memory-build-logs
+          path: build-logs-memory/
+          if-no-files-found: ignore
+          retention-days: 14
