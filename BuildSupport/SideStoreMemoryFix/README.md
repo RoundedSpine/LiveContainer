@@ -64,10 +64,13 @@ and Shortcuts behavior still need validation after this source-build integration
 the original PR commit/parent, and hashes the verbatim patch. Preparation rejects
 a mismatched base or patch and accepts no moving branch as the source version.
 The existing dylibify 1.0 release is checksum-verified before execution.
+An additional checksum-pinned **test-only** patch adds the missing Foundation
+import to an existing SideSign test file so it compiles with the selected Swift
+toolchain. It does not alter production signing behavior or the original PR.
 
 No SideStore application source contribution is generated here. The checked-out
 SideStore repository is used as a build input and consumes the existing human PR
-in its dependency. The custom workflow, packaging and tests live in this
+and the separate test-import compatibility fix in its dependency. The custom workflow, packaging and tests live in this
 LiveContainer fork. No Apple IDs, passwords, pairing records, provisioning
 profiles, certificates, private keys or device identifiers are required by CI.
 

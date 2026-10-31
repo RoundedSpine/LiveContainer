@@ -1,0 +1,8 @@
+diff --git a/Tests/SideSignTests/SideSignTests.swift b/Tests/SideSignTests/SideSignTests.swift
+--- a/Tests/SideSignTests/SideSignTests.swift
++++ b/Tests/SideSignTests/SideSignTests.swift
+@@ -9,3 +9,4 @@
++import Foundation
+ import Testing
+ @testable import SideSign
+ import CodeSignKit

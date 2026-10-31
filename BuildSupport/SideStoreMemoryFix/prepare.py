@@ -19,6 +19,9 @@ def prepare(directory):
     patch = HERE / 'sidesign-pr4.patch'
     if hashlib.sha256(patch.read_bytes()).hexdigest() != pins['sidesign_patch_sha256']:
         raise ValueError('SideSign PR patch hash mismatch')
+    test_patch = HERE / 'sidesign-test-foundation.patch'
+    if hashlib.sha256(test_patch.read_bytes()).hexdigest() != pins['sidesign_test_patch_sha256']:
+        raise ValueError('SideSign test compatibility patch hash mismatch')
     source = directory / 'SideStore'
     source.mkdir(parents=True, exist_ok=False)
     run('git', 'init', str(source))
@@ -36,8 +39,10 @@ def prepare(directory):
     run('git', '-C', str(dependency), 'apply', '--check', str(patch))
     run('git', '-C', str(dependency), 'apply', str(patch))
     run('git', '-C', str(dependency), 'apply', '--reverse', '--check', str(patch))
-    # No source contribution is generated in SideStore: consume its pinned source
-    # and the existing PR verbatim for this custom LiveContainer build.
+    run('git', '-C', str(dependency), 'apply', '--check', str(test_patch))
+    run('git', '-C', str(dependency), 'apply', str(test_patch))
+    # SideStore application sources stay unchanged. The production PR is verbatim;
+    # the separate compatibility patch only adds Foundation to an existing test.
     tool = directory / 'dylibify'
     with urlopen(pins['dylibify_url'], timeout=90) as response:
         data = response.read()

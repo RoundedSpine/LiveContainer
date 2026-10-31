@@ -8,5 +8,6 @@
   "sidesign_patch_sha256": "35b07afda99108d8f8286505961c8cf66a1ab9e38b2a439167be7b2ee7fe0c00",
   "livecontainer_base_revision": "9108ae624ea001f7d7696d48407f890b48fa2653",
   "dylibify_url": "https://github.com/LiveContainer/dylibify/releases/download/1.0/dylibify",
-  "dylibify_sha256": "6d23f6a2fc4d8442f87caa1161aebe6ecaafd0e8c41ce205da007efb04fc82c7"
+  "dylibify_sha256": "6d23f6a2fc4d8442f87caa1161aebe6ecaafd0e8c41ce205da007efb04fc82c7",
+  "sidesign_test_patch_sha256": "e74db8e1cb6c593874a3dbbfa4e70f4964cde4a2ab0fa61494db17bfd516a535"
 }

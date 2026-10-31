@@ -128,6 +128,10 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(pins['sidesign_patch_sha256'], hashlib.sha256(data).hexdigest())
         files = [line.split(' b/')[1] for line in data.decode().splitlines() if line.startswith('diff --git ')]
         self.assertEqual({'Sources/DeveloperPortal/AppIDs.swift', 'Sources/DeveloperPortal/DeveloperPortalAPI.swift', 'Sources/Models/Feature.swift', 'Tests/SideSignTests/CapabilityTests.swift'}, set(files))
+        compatibility = (HERE / 'sidesign-test-foundation.patch').read_bytes()
+        self.assertEqual(pins['sidesign_test_patch_sha256'], hashlib.sha256(compatibility).hexdigest())
+        changed = [line.split(' b/')[1] for line in compatibility.decode().splitlines() if line.startswith('diff --git ')]
+        self.assertEqual(['Tests/SideSignTests/SideSignTests.swift'], changed)
 
 
 if __name__ == '__main__':
